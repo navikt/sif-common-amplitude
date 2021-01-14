@@ -1,2 +1,2 @@
 export * from './amplitude';
-export { default as useLogSidevisning } from './hooks/useLogSidevisning';
+export * from './hooks/useLogSidevisning';
