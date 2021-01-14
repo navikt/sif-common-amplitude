@@ -51,8 +51,7 @@
     },
     "files": [
         "package.json",
-        "/lib/index.d.ts",
-        "/lib/index.ts"
+        "/lib"
     ],
     "description": "Amplitude log util used in sif",
     "directories": {
