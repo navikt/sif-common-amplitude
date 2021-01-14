@@ -22,13 +22,14 @@ export enum ApplikasjonHendelse {
 
 interface Props {
     applicationKey: string;
+    team: string;
     logToConsoleOnly?: boolean;
     isActive?: boolean;
     children: React.ReactNode;
 }
 
 export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props) => {
-    const { applicationKey, isActive, logToConsoleOnly } = props;
+    const { applicationKey, isActive, logToConsoleOnly, team } = props;
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
@@ -68,7 +69,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
     async function logSidevisning(pageKey: string) {
         return logEvent(AmplitudeEvents.sidevisning, {
             pageKey,
-            team: 'sykdom-i-familien',
+            team,
         });
     }
 
