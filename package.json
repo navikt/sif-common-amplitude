@@ -69,7 +69,7 @@
     "bugs": {
         "url": "https://github.com/navikt/sif-common-amplitude/issues"
     },
-    "homepage": "https://navikt.github.io/sif-common-amplitude",
+    "homepage": "https://github.com/navikt/sif-common-amplitude",
     "main": "lib/index.js",
     "types": "lib/index.d.js"
 }
