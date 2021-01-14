@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-// import { getEnvironmentVariable } from '@navikt/sif-common-core/lib/utils/envUtils';
-import amplitude, { AmplitudeClient } from 'amplitude-js';
+import * as amplitude from 'amplitude-js';
+import { AmplitudeClient } from 'amplitude-js';
 import constate from 'constate';
 
 export enum AmplitudeEvents {
