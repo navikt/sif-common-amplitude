@@ -33,7 +33,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
-        if (amplitude && isActive) {
+        if (amplitude && amplitude.getInstance && isActive) {
             instance.current = amplitude.getInstance();
             if (instance.current) {
                 instance.current.init('default', '', {
