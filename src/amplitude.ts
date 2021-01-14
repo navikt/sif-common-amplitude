@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import * as amplitude from 'amplitude-js';
+import amplitude from 'amplitude-js';
 import { AmplitudeClient } from 'amplitude-js';
 import constate from 'constate';
 
@@ -33,7 +33,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
-        if (amplitude && amplitude.getInstance && isActive) {
+        if (amplitude && isActive) {
             instance.current = amplitude.getInstance();
             if (instance.current) {
                 instance.current.init('default', '', {
