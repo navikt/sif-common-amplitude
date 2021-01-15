@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 import amplitude from 'amplitude-js';
+import { getInstance } from 'amplitude-js';
 import { AmplitudeClient } from 'amplitude-js';
 import constate from 'constate';
 
 export enum AmplitudeEvents {
     'sidevisning' = 'sidevisning',
     'applikasjonStartet' = 'applikasjon-startet',
+    'søknadStartet' = 'skjema startet',
     'søknadSendt' = 'skjema fullført',
     'søknadFeilet' = 'skjemainnsending feilet',
     'applikasjonInfo' = 'applikasjon-info',
@@ -34,7 +36,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
 
     useEffect(() => {
         if (amplitude && isActive) {
-            instance.current = amplitude.getInstance();
+            instance.current = getInstance();
             if (instance.current) {
                 instance.current.init('default', '', {
                     apiEndpoint: 'amplitude.nav.no/collect-auto',
