@@ -75,6 +75,13 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         });
     }
 
+    async function logSoknadStartet(skjemanavn: string) {
+        return logEvent(AmplitudeEvents.søknadStartet, {
+            skjemanavn,
+            skjemaId: applicationKey,
+        });
+    }
+
     async function logSoknadSent(skjemanavn: string) {
         return logEvent(AmplitudeEvents.søknadSendt, {
             skjemanavn,
@@ -96,5 +103,13 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         });
     }
 
-    return { logEvent, logSidevisning, setUserProperties, logSoknadSent, logSoknadFailed, logHendelse };
+    return {
+        logEvent,
+        logSidevisning,
+        setUserProperties,
+        logSoknadStartet,
+        logSoknadSent,
+        logSoknadFailed,
+        logHendelse,
+    };
 });
