@@ -111,6 +111,13 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         return logEvent(AmplitudeEvents.applikasjonInfo, details);
     }
 
+    async function logUserLoggedOut(info: string) {
+        return logEvent(AmplitudeEvents.applikasjonHendelse, {
+            hendelse: ApplikasjonHendelse.brukerSendesTilLoggInn,
+            info,
+        });
+    }
+
     return {
         logEvent,
         logSidevisning,
@@ -120,5 +127,6 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         logSoknadFailed,
         logHendelse,
         logInfo,
+        logUserLoggedOut,
     };
 });
