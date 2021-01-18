@@ -30,6 +30,10 @@ interface Props {
     children: React.ReactNode;
 }
 
+type EventProperties = {
+    [key: string]: any;
+};
+
 export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props) => {
     const { applicationKey, isActive, logToConsoleOnly, team } = props;
     const instance = useRef<AmplitudeClient | undefined>();
@@ -49,7 +53,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         }
     }, [isActive]);
 
-    async function logEvent(eventName: string, eventProperties?: any) {
+    async function logEvent(eventName: string, eventProperties?: EventProperties) {
         if (isActive && instance.current) {
             const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
             if (logToConsoleOnly) {
@@ -96,11 +100,15 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         });
     }
 
-    async function logHendelse(hendelse: ApplikasjonHendelse, details?: any) {
+    async function logHendelse(hendelse: ApplikasjonHendelse, details?: EventProperties) {
         return logEvent(AmplitudeEvents.applikasjonHendelse, {
             hendelse,
             details,
         });
+    }
+
+    async function logInfo(details?: EventProperties) {
+        return logEvent(AmplitudeEvents.applikasjonInfo, details);
     }
 
     return {
@@ -111,5 +119,6 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         logSoknadSent,
         logSoknadFailed,
         logHendelse,
+        logInfo,
     };
 });
