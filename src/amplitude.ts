@@ -55,14 +55,20 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
 
     async function logEvent(eventName: string, eventProperties?: EventProperties) {
         if (isActive && instance.current) {
-            const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
-            if (logToConsoleOnly) {
-                console.log({ eventName, eventProperties: eventProps });
-                return Promise.resolve();
-            }
-            if (instance.current) {
-                return instance.current.logEvent(eventName, eventProps);
-            }
+            return new Promise((resolve, reject) => {
+                const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
+                if (logToConsoleOnly) {
+                    console.log({ eventName, eventProperties: eventProps });
+                    return resolve(true);
+                }
+                if (instance.current) {
+                    return instance.current.logEvent(eventName, eventProps, () => {
+                        resolve(true);
+                    });
+                } else {
+                    reject('no instance');
+                }
+            });
         }
     }
 
