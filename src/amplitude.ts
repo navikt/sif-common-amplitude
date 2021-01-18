@@ -107,7 +107,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         });
     }
 
-    async function logInfo(details?: EventProperties) {
+    async function logInfo(details: EventProperties) {
         return logEvent(AmplitudeEvents.applikasjonInfo, details);
     }
 
