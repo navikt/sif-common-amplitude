@@ -34,7 +34,7 @@ type EventProperties = {
 };
 
 export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props) => {
-    const { applicationKey, isActive, logToConsoleOnly } = props;
+    const { applicationKey, isActive = true, logToConsoleOnly } = props;
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
