@@ -4,6 +4,15 @@ import { getInstance } from 'amplitude-js';
 import { AmplitudeClient } from 'amplitude-js';
 import constate from 'constate';
 
+export enum SIFCommonPageKey {
+    'velkommen' = 'velkommen',
+    'søknadSendt' = 'søknadSendt',
+    'feilside' = 'feilside',
+    'intro' = 'intro',
+    'ikkeMyndig' = 'ikkeMyndig',
+    'ikkeTilgjengelig' = 'ikkeTilgjengelig',
+}
+
 export enum AmplitudeEvents {
     'sidevisning' = 'sidevisning',
     'applikasjonStartet' = 'applikasjon-startet',
