@@ -6,7 +6,7 @@ import constate from 'constate';
 
 export enum SIFCommonPageKey {
     'velkommen' = 'velkommen',
-    'søknadSendt' = 'søknadSendt',
+    'kvittering' = 'kvittering',
     'feilside' = 'feilside',
     'intro' = 'intro',
     'ikkeMyndig' = 'ikkeMyndig',
