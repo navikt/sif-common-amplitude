@@ -70,8 +70,8 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
                     return resolve(true);
                 }
                 if (instance.current) {
-                    return instance.current.logEvent(eventName, eventProps, () => {
-                        resolve(true);
+                    instance.current.logEvent(eventName, eventProps, (response) => {
+                        resolve(response);
                     });
                 } else {
                     reject('no instance');
