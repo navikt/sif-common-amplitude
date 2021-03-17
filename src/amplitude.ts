@@ -4,6 +4,8 @@ import { getInstance } from 'amplitude-js';
 import { AmplitudeClient } from 'amplitude-js';
 import constate from 'constate';
 
+const MAX_AWAIT_TIME = 500;
+
 export enum SIFCommonPageKey {
     'velkommen' = 'velkommen',
     'kvittering' = 'kvittering',
@@ -36,6 +38,7 @@ interface Props {
     logToConsoleOnly?: boolean;
     isActive?: boolean;
     children: React.ReactNode;
+    maxAwaitTime?: number;
 }
 
 type EventProperties = {
@@ -43,7 +46,7 @@ type EventProperties = {
 };
 
 export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props) => {
-    const { applicationKey, isActive = true, logToConsoleOnly } = props;
+    const { applicationKey, isActive = true, maxAwaitTime = MAX_AWAIT_TIME, logToConsoleOnly } = props;
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
@@ -63,7 +66,8 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
 
     async function logEvent(eventName: string, eventProperties?: EventProperties) {
         if (isActive && instance.current) {
-            return new Promise((resolve, reject) => {
+            const timeoutPromise = new Promise((resolve, _) => setTimeout(() => resolve(null), maxAwaitTime));
+            const logPromise = new Promise((resolve, reject) => {
                 const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
                 if (logToConsoleOnly) {
                     console.log({ eventName, eventProperties: eventProps });
@@ -77,6 +81,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
                     reject('no instance');
                 }
             });
+            return Promise.race([timeoutPromise, logPromise]);
         }
     }
 
