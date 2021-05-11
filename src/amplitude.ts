@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import amplitude, { AmplitudeClient, getInstance } from 'amplitude-js';
+import { AmplitudeClient, getInstance } from 'amplitude-js';
 import constate from 'constate';
 
 const MAX_AWAIT_TIME = 500;
@@ -33,6 +33,7 @@ export enum ApplikasjonHendelse {
 }
 
 export enum ApiError {
+    'oppstartsinfo' = 'oppstartsinfo',
     'søkerinfo' = 'søkerinfo',
     'arbeidsgiver' = 'arbeidsgiver',
     'barn' = 'barn',
@@ -56,7 +57,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
-        if (amplitude && isActive) {
+        if (isActive) {
             instance.current = getInstance();
             if (instance.current) {
                 instance.current.init('default', '', {
