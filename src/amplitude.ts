@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
-import amplitude from 'amplitude-js';
-import { getInstance } from 'amplitude-js';
-import { AmplitudeClient } from 'amplitude-js';
+import { AmplitudeClient, getInstance } from 'amplitude-js';
 import constate from 'constate';
 
 const MAX_AWAIT_TIME = 500;
@@ -23,6 +21,7 @@ export enum AmplitudeEvents {
     'søknadFeilet' = 'skjemainnsending feilet',
     'applikasjonInfo' = 'applikasjon-info',
     'applikasjonHendelse' = 'applikasjon-hendelse',
+    'apiError' = 'api-error',
 }
 
 export enum ApplikasjonHendelse {
@@ -31,6 +30,14 @@ export enum ApplikasjonHendelse {
     'starterMedMellomlagring' = 'starterMedMellomlagring',
     'avbryt' = 'avbryt',
     'fortsettSenere' = 'fortsettSenere',
+}
+
+export enum ApiError {
+    'oppstartsinfo' = 'oppstartsinfo',
+    'søkerinfo' = 'søkerinfo',
+    'arbeidsgiver' = 'arbeidsgiver',
+    'barn' = 'barn',
+    'vedlegg' = 'vedlegg',
 }
 
 interface Props {
@@ -50,7 +57,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
     const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
-        if (amplitude && isActive) {
+        if (isActive) {
             instance.current = getInstance();
             if (instance.current) {
                 instance.current.init('default', '', {
@@ -66,7 +73,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
 
     async function logEvent(eventName: string, eventProperties?: EventProperties) {
         if (isActive && instance.current) {
-            const timeoutPromise = new Promise((resolve, _) => setTimeout(() => resolve(null), maxAwaitTime));
+            const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(null), maxAwaitTime));
             const logPromise = new Promise((resolve, reject) => {
                 const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
                 if (logToConsoleOnly) {
@@ -125,6 +132,13 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         });
     }
 
+    async function logApiError(error: ApiError, details?: EventProperties) {
+        return logEvent(AmplitudeEvents.apiError, {
+            error,
+            details,
+        });
+    }
+
     async function logInfo(details: EventProperties) {
         return logEvent(AmplitudeEvents.applikasjonInfo, details);
     }
@@ -145,6 +159,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
         logSoknadFailed,
         logHendelse,
         logInfo,
+        logApiError,
         logUserLoggedOut,
     };
 });
