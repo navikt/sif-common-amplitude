@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-amplitude",
-    "version": "1.3.0-beta.0",
+    "version": "1.3.0-beta.1",
     "private": false,
     "scripts": {
         "eject": "react-scripts eject",
@@ -36,8 +36,8 @@
         "typescript": "^4.2.4"
     },
     "peerDependencies": {
-        "amplitude-js": "^7.4.1",
-        "constate": "^3.1.0",
+        "amplitude-js": "^8.2.1",
+        "constate": "^3.2.0",
         "react": "^17.x"
     },
     "jest": {
