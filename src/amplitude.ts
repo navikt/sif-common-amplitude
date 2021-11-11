@@ -9,7 +9,9 @@ export enum SIFCommonPageKey {
     'kvittering' = 'kvittering',
     'feilside' = 'feilside',
     'intro' = 'intro',
+    /** deprecated - erstattet av ikkeTilgang */
     'ikkeMyndig' = 'ikkeMyndig',
+    'ikkeTilgang' = 'ikkeTilgang',
     'ikkeTilgjengelig' = 'ikkeTilgjengelig',
 }
 
@@ -81,7 +83,7 @@ export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props)
                     resolve(true);
                 }
                 if (instance.current) {
-                    instance.current.logEvent(eventName, eventProps, (response) => {
+                    instance.current.logEvent(eventName, eventProps, (response: any) => {
                         resolve(response);
                     });
                 } else {
