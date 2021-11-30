@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { AmplitudeClient, getInstance } from 'amplitude-js';
+import { useEffect } from 'react';
+import amplitude from 'amplitude-js';
 import constate from 'constate';
 
 const MAX_AWAIT_TIME = 500;
@@ -56,47 +56,42 @@ type EventProperties = {
 
 export const [AmplitudeProvider, useAmplitudeInstance] = constate((props: Props) => {
     const { applicationKey, isActive = true, maxAwaitTime = MAX_AWAIT_TIME, logToConsoleOnly } = props;
-    const instance = useRef<AmplitudeClient | undefined>();
 
     useEffect(() => {
-        if (isActive) {
-            instance.current = getInstance();
-            if (instance.current) {
-                instance.current.init('default', '', {
-                    apiEndpoint: 'amplitude.nav.no/collect-auto',
-                    saveEvents: false,
-                    includeUtm: true,
-                    includeReferrer: true,
-                    platform: window.location.toString(),
-                });
-            }
+        const instance = amplitude.getInstance();
+        if (isActive && instance) {
+            instance.init('default', '', {
+                apiEndpoint: 'amplitude.nav.no/collect-auto',
+                saveEvents: false,
+                includeUtm: true,
+                includeReferrer: true,
+                platform: window.location.toString(),
+            });
         }
     }, [isActive]);
 
     async function logEvent(eventName: string, eventProperties?: EventProperties) {
-        if (isActive && instance.current) {
+        const instance = amplitude.getInstance();
+        if (isActive && instance) {
             const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(null), maxAwaitTime));
-            const logPromise = new Promise((resolve, reject) => {
+            const logPromise = new Promise((resolve) => {
                 const eventProps = { ...eventProperties, app: applicationKey, applikasjon: applicationKey };
                 if (logToConsoleOnly) {
                     console.log({ eventName, eventProperties: eventProps });
                     resolve(true);
                 }
-                if (instance.current) {
-                    instance.current.logEvent(eventName, eventProps, (response: any) => {
-                        resolve(response);
-                    });
-                } else {
-                    reject('no instance');
-                }
+                instance.logEvent(eventName, eventProps, (response: any) => {
+                    resolve(response);
+                });
             });
             return Promise.race([timeoutPromise, logPromise]);
         }
     }
 
     function setUserProperties(properties: any) {
-        if (isActive && instance.current) {
-            instance.current.setUserProperties(properties);
+        const instance = amplitude.getInstance();
+        if (isActive && instance) {
+            instance.setUserProperties(properties);
         }
     }
 
