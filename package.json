@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-amplitude",
-    "version": "2.3.0@beta.0",
+    "version": "2.2.3",
     "private": false,
     "scripts": {
         "eject": "react-scripts eject",
