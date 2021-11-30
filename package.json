@@ -1,6 +1,6 @@
 {
     "name": "@navikt/sif-common-amplitude",
-    "version": "2.2.1",
+    "version": "2.2.2-beta.0",
     "private": false,
     "scripts": {
         "eject": "react-scripts eject",
@@ -16,7 +16,7 @@
         "@types/react": "^17.0.37",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "5.5.0",
-        "amplitude-js": "8.8.0",
+        "amplitude-js": "^8.12.0",
         "constate": "^3.3.0",
         "eslint": "^8.3.0",
         "eslint-config-prettier": "^8.3.0",
@@ -35,7 +35,7 @@
         "typescript": "^4.5.2"
     },
     "peerDependencies": {
-        "amplitude-js": "8.8.0",
+        "amplitude-js": "8.x",
         "constate": "^3.3.0",
         "react": "^17.x"
     },
