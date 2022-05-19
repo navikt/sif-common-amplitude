@@ -30,6 +30,7 @@ export enum ApplikasjonHendelse {
     'brukerSendesTilLoggInn' = 'brukerSendesTilLoggInn',
     'vedleggOpplastingFeilet' = 'vedleggOpplastingFeilet',
     'starterMedMellomlagring' = 'starterMedMellomlagring',
+    'ugyldigMellomlagring' = 'ugyldigMellomlagring',
     'avbryt' = 'avbryt',
     'fortsettSenere' = 'fortsettSenere',
 }
