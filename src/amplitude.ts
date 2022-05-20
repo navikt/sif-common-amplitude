@@ -41,6 +41,7 @@ export enum ApiError {
     'arbeidsgiver' = 'arbeidsgiver',
     'barn' = 'barn',
     'vedlegg' = 'vedlegg',
+    'mellomlagring' = 'mellomlagring',
 }
 
 interface Props {
